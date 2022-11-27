@@ -1,21 +1,58 @@
-//
-//  ContentView.swift
-//  DiceSwiftUI
-//
-//  Created by Ilya Vasilev on 27.11.2022.
-//
 
 import SwiftUI
 
 struct ContentView: View {
+    
+   @State var leftDiceNumber = 1
+    @State var rightDiceNumber = 1
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ZStack {
+            Image("background")
+                .resizable()
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                
+                Image("diceeLogo")
+                Spacer()
+                
+                HStack {
+                diceView(number:  leftDiceNumber)
+                diceView(number: rightDiceNumber)
+                }
+                
+                .padding(.horizontal)
+                
+                Spacer()
+                
+                Button {
+                    self.leftDiceNumber = Int.random(in: 1...6)
+                        self.rightDiceNumber = Int.random(in: 1...6)
+                } label: {
+                    Text("Roll")
+                        .font(.system(size: 35))
+                        .fontWeight(.heavy)
+                        .foregroundColor(.white)
+                        .padding(.horizontal)
+                }
+                .background(Color.red)
+                .cornerRadius(8)
+            }
         }
-        .padding()
+    }
+}
+
+struct diceView: View {
+    
+    let number : Int
+    
+    var body : some View {
+        
+        Image("dice\(number)")
+            .resizable()
+            .aspectRatio(1, contentMode: .fit)
+            .padding()
     }
 }
 
